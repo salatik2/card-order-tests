@@ -20,7 +20,7 @@ public class CardOrderTest {
     @BeforeEach
     void setup() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-dev-shm-usage", "--no-sandbox", "--headless=new");
+        options.addArguments("--headless", "--disable-dev-shm-usage", "--no-sandbox");
         driver = new ChromeDriver(options);
         driver.get("http://0.0.0.0:9999");
     }
