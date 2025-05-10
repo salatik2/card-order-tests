@@ -23,13 +23,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
+          google-chrome-stable --version
+
+      - name: Install Xvfb
+        run: sudo apt-get install -y xvfb
 
       - name: Start virtual display
         run: |
-          sudo apt-get install -y xvfb
-          export DISPLAY=':99.0'
           Xvfb :99 -ac -screen 0 1920x1080x24 > /dev/null 2>&1 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
       - name: Run UI Tests
         run: ./gradlew clean test
