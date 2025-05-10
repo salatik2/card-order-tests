@@ -19,11 +19,13 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: Install Chrome
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
-          google-chrome-stable --version
 
       - name: Install Xvfb
         run: sudo apt-get install -y xvfb
@@ -33,8 +35,10 @@ jobs:
           Xvfb :99 -ac -screen 0 1920x1080x24 > /dev/null 2>&1 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
 
-      - name: Give execute permission to gradlew
-        run: chmod +x gradlew
+      - name: Start tested application
+        run: |
+          nohup java -jar artifacts/app-order.jar --server.address=0.0.0.0 --server.port=9999 > app.log 2>&1 &
+          sleep 15
 
-      - name: Run tests
+      - name: Run UI Tests
         run: ./gradlew clean test
