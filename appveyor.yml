@@ -1,0 +1,9 @@
+version: 1.0.{build}
+
+image: Ubuntu2004
+
+build_script:
+  - chmod +x ./gradlew
+  - ./gradlew clean test
+
+test: off
